@@ -7,6 +7,7 @@ import java.util.Iterator;
 public class HashMultiSet<T> implements MultiSet<T>
 {
 	private HashMap<T,Integer> map;
+	private Iterator <T> valeur;
 	
 	public HashMultiSet()
 	{
@@ -42,21 +43,26 @@ public class HashMultiSet<T> implements MultiSet<T>
 	@Override
 	public boolean remove(Object e) 
 	{
-		map.remove(e);
+		T a = (T) e;
+		map.remove(a);
 		return true;
 	}
 	
-	//à coder
 	@Override
 	public boolean remove(Object e, int count) 
 	{
+		int value = map.get(e).intValue();
+		value=value-count;
+		T a = (T) e;
+		map.put(a,value);
 		return false;
 	}
-	//à coder
+	
 	@Override
-	public int count(T o) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int count(T o) 
+	{
+		int value = map.get(o).intValue();
+		return value;
 	}
 
 	@Override
@@ -69,34 +75,45 @@ public class HashMultiSet<T> implements MultiSet<T>
 		return map.size();
 	}
 	
+	@Override
+	public HashMultiSetIterator iterator() {
+		Iterator <T> a = valeur;
+		return new HashMultiSetIterator(a);
+	}
+	
 	public class HashMultiSetIterator implements Iterator<T>
-	{
-		private Iterator <T> valeur;				
+	{		
 		private int nb_occurence;
+		private int cpt=0;
 		
-		public HashMultiSetIterator (Iterator<T> valeur)
+		public HashMultiSetIterator (Iterator<T> a)
 		{
-			this.valeur=valeur;
+			valeur=a;
 			this.nb_occurence=map.get(valeur.next());
+			cpt++;
 		}
 		
 		@Override
 		public boolean hasNext() 
 		{
-			return false;
+			return cpt<map.size();
 		}
 
 		@Override
-		public T next() 
+		public T next()
 		{
 			if (nb_occurence>0)
 			{
 				nb_occurence--;
-				return valeur;
+				return valeur.next();
+			}
+			else
+			{
+				valeur.next();
+				cpt++;
+				nb_occurence=map.get(valeur.next());
+				return valeur.next();
 			}
 		}
 	}
-	
-	
-
 }
