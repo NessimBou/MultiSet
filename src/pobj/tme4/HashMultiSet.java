@@ -1,22 +1,26 @@
 package pobj.tme4;
 
+import java.util.AbstractCollection;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
-public class HashMultiSet<T> implements MultiSet<T>
+public class HashMultiSet<T> extends AbstractCollection <T> implements MultiSet<T> 
 {
 	private HashMap<T,Integer> map;
-	private Iterator <T> valeur;
+	private int size;
 	
 	public HashMultiSet()
 	{
 		map=new HashMap<T,Integer>();
+		size=0;
 	}
 	
 	public HashMultiSet(Collection<T> col)
 	{
 		map=new HashMap<T,Integer>();
+		size=0;
 		for (T t : col)
 			add(t);
 	}
@@ -24,96 +28,115 @@ public class HashMultiSet<T> implements MultiSet<T>
 	@Override
 	public boolean add(T e) 
 	{
-		int value=1;
-		if (!map.containsKey(e))
-			map.put(e, value);
-		else
-			value=map.get(e).intValue()+1;
-			map.put(e, value);			
-		return true;
+		return add(e,1);
 	}
 
 	@Override
 	public boolean add(T e, int count) 
 	{
-		map.put(e,count);
+		if (!map.containsKey(e))
+			map.put(e,count);
+		else
+		{
+			int value=map.get(e);
+			map.put(e,value+count);
+		}
 		return true;
 	}
 
 	@Override
 	public boolean remove(Object e) 
 	{
-		T a = (T) e;
-		map.remove(a);
-		return true;
+		return remove(e,1);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean remove(Object e, int count) 
 	{
-		int value = map.get(e).intValue();
+		Integer value = map.get(e);
+		if (value==null)
+			return false;
 		value=value-count;
-		T a = (T) e;
-		map.put(a,value);
-		return false;
+		if (value<=0)
+		{
+			size=size-value;
+			map.put((T) e, null);
+			return true;
+		}
+		else
+		{
+			size=size-value;
+			map.put((T) e,value);
+			return true;
+		}
 	}
 	
 	@Override
 	public int count(T o) 
 	{
-		int value = map.get(o).intValue();
-		return value;
+		return map.get(o);
 	}
 
 	@Override
 	public void clear() {
+		size=0;
 		map.clear();
 	}
 
 	@Override
 	public int size() {
-		return map.size();
+		return size();
 	}
 	
 	@Override
-	public HashMultiSetIterator iterator() {
-		Iterator <T> a = valeur;
-		return new HashMultiSetIterator(a);
+	public Iterator<T> iterator() {
+		return new HashMultiSetIterator(map);
 	}
 	
 	public class HashMultiSetIterator implements Iterator<T>
-	{		
-		private int nb_occurence;
-		private int cpt=0;
+	{	
+		private Iterator<Map.Entry<T, Integer>> listit;
+		private Map.Entry<T, Integer> courant;
+		private int cpt = 0;
 		
-		public HashMultiSetIterator (Iterator<T> a)
+		public HashMultiSetIterator (HashMap<T, Integer> list)
 		{
-			valeur=a;
-			this.nb_occurence=map.get(valeur.next());
-			cpt++;
+			listit=list.entrySet().iterator();
+			courant=listit.next();
 		}
 		
 		@Override
 		public boolean hasNext() 
 		{
-			return cpt<map.size();
+			int compte=this.courant.getValue();
+			if (cpt<compte)
+				return true;
+			else
+				return listit.hasNext();
 		}
 
 		@Override
 		public T next()
 		{
-			if (nb_occurence>0)
+			int compte=this.courant.getValue();
+			if (cpt<compte)
 			{
-				nb_occurence--;
-				return valeur.next();
+				cpt++;
+				return courant.getKey();
 			}
 			else
 			{
-				valeur.next();
-				cpt++;
-				nb_occurence=map.get(valeur.next());
-				return valeur.next();
+				cpt=1;
+				courant=listit.next();
+				return courant.getKey();
 			}
 		}
+	}
+
+	@Override
+	public java.util.List<T> elements() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
