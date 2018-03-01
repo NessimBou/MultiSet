@@ -1,4 +1,4 @@
-package pobj.tme4;
+package pobj.tme5;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -37,12 +37,14 @@ public class WordCount
 			}
 		}
 		br.close();	
-		List<String> maliste = ms.elements();
-		System.out.println(maliste);
-		for (int i=0;i<10;i++)
-		{
-			System.out.println(maliste.get(i));
-		}
+		System.out.println(ms.toString());
+		//System.out.println("\n");
+		//List<String> maliste = ms.elements();
+		//System.out.println(maliste);
+		//for (int i=0;i<10;i++)
+		//{
+		//	System.out.println(maliste.get(i));
+		//}	
 	}
 	
 }

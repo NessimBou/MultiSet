@@ -1,4 +1,4 @@
-package pobj.tme4;
+package pobj.tme5;
 
 import java.util.AbstractCollection;
 import java.util.ArrayList;
@@ -32,13 +32,13 @@ public class HashMultiSet<T> extends AbstractCollection <T> implements MultiSet<
 	}
 	
 	@Override
-	public boolean add(T e) 
+	public boolean add(T e) throws IllegalArgumentException
 	{
 		return add(e,1);
 	}
 
 	@Override
-	public boolean add(T e, int count) 
+	public boolean add(T e, int count) throws IllegalArgumentException
 	{
 		if (!map.containsKey(e))
 			map.put(e,count);
@@ -51,14 +51,14 @@ public class HashMultiSet<T> extends AbstractCollection <T> implements MultiSet<
 	}
 
 	@Override
-	public boolean remove(Object e) 
+	public boolean remove(Object e) throws IllegalArgumentException
 	{
 		return remove(e,1);
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public boolean remove(Object e, int count) 
+	public boolean remove(Object e, int count) throws IllegalArgumentException
 	{
 		Integer value = map.get(e);
 		if (value==null)
@@ -148,5 +148,19 @@ public class HashMultiSet<T> extends AbstractCollection <T> implements MultiSet<
 		Collections.sort(liste, (x,y) -> map.get(x).compareTo(map.get(y)));
 		System.out.println(liste);
 		return liste;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public String toString()
+	{
+		String s ="[";
+		Iterator<Entry<T, Integer>> iterator = map.entrySet().iterator();
+		while (iterator.hasNext()) 
+		{
+			Map.Entry mapentry = (Map.Entry) iterator.next();
+			s=s+mapentry.getKey()+ ":" + mapentry.getValue()+"; ";
+		}
+		s+="]";
+		return s;
 	}
 }
