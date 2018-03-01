@@ -34,6 +34,7 @@ public class HashMultiSet<T> extends AbstractCollection <T> implements MultiSet<
 	@Override
 	public boolean add(T e) 
 	{
+		size++;
 		return add(e,1);
 	}
 
@@ -41,11 +42,15 @@ public class HashMultiSet<T> extends AbstractCollection <T> implements MultiSet<
 	public boolean add(T e, int count) 
 	{
 		if (!map.containsKey(e))
+		{
 			map.put(e,count);
+			size=size+count;
+		}
 		else
 		{
 			int value=map.get(e);
 			map.put(e,value+count);
+			size=size+count;
 		}
 		return true;
 	}
@@ -66,13 +71,13 @@ public class HashMultiSet<T> extends AbstractCollection <T> implements MultiSet<
 		value=value-count;
 		if (value<=0)
 		{
-			size=size-value;
+			size=size-count;
 			map.put((T) e, null);
 			return true;
 		}
 		else
 		{
-			size=size-value;
+			size=size-count;
 			map.put((T) e,value);
 			return true;
 		}
@@ -145,8 +150,8 @@ public class HashMultiSet<T> extends AbstractCollection <T> implements MultiSet<
 	{
 		Set<T> a = new HashSet<T>(this);
 		List <T> liste= new ArrayList<T>(a);	
-		Collections.sort(liste, (x,y) -> map.get(x).compareTo(map.get(y)));
-		System.out.println(liste);
+		Collections.sort(liste, Collections.reverseOrder((x,y) -> map.get(x).compareTo(map.get(y))));
+		//System.out.println(liste);
 		return liste;
 	}
 }

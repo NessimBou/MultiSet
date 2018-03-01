@@ -38,7 +38,7 @@ public class WordCount
 		}
 		br.close();	
 		List<String> maliste = ms.elements();
-		System.out.println(maliste);
+		//System.out.println(maliste);
 		for (int i=0;i<10;i++)
 		{
 			System.out.println(maliste.get(i));

@@ -28,15 +28,19 @@ public class WordCount
 		String file = "data/WarAndPeace.txt";
 		BufferedReader br = new BufferedReader(new FileReader(file));
 		String line;
+		int cpt=0;
 		while ((line = br.readLine())!=null) 
 		{ 
 			for (String word : line.split("\\P{L}+"))
 			{ 
 				if (word.equals("")) continue;
-				ms.add(word);
+				cpt++;
+				ms.add(word.toLowerCase());
 			}
 		}
 		br.close();	
+		//System.out.println(cpt);
+		//System.out.println(ms.size());
 		System.out.println(ms.toString());
 		//System.out.println("\n");
 		//List<String> maliste = ms.elements();
