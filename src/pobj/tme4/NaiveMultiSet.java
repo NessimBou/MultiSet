@@ -2,12 +2,12 @@ package pobj.tme4;
 
 import java.util.AbstractCollection;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 public class NaiveMultiSet<T> extends AbstractCollection <T> implements MultiSet<T>
 {
+	@SuppressWarnings("unused")
 	private ArrayList <String> mytab;
 
 	@Override

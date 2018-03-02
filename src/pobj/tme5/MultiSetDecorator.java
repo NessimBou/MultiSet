@@ -37,6 +37,7 @@ public class MultiSetDecorator<T> implements MultiSet<T>
 		return decorated.toArray();
 	}
 
+	@SuppressWarnings("hiding")
 	@Override
 	public <T> T[] toArray(T[] a) {
 		// TODO Auto-generated method stub
@@ -118,15 +119,20 @@ public class MultiSetDecorator<T> implements MultiSet<T>
 		return decorated.elements();
 	}
 	
+	public String toString()
+	{
+		return decorated.toString();
+	}
 	public boolean isConsistent()
 	{
 		boolean bool=true;
 		int all=0;
-		for (int i: decorated.map.values())
+		for (T i: elements())
 		{
-			if (i<=0)
+			int a = count(i);
+			if (a<=0)
 				bool=false;
-			all=all+i;
+			all=all+a;
 		}
 		if (all!=this.size())
 			bool=false;

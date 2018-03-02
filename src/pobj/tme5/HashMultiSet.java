@@ -9,7 +9,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 public class HashMultiSet<T> extends AbstractCollection <T> implements MultiSet<T> 
@@ -50,7 +49,7 @@ public class HashMultiSet<T> extends AbstractCollection <T> implements MultiSet<
 			map.put(e,value+count);
 		}
 		size=size+count;
-		assert isConsistent();
+		//assert isConsistent();
 		return true;
 	}
 
@@ -72,14 +71,14 @@ public class HashMultiSet<T> extends AbstractCollection <T> implements MultiSet<
 		{
 			size=size-count;
 			map.put((T) e, null);
-			assert isConsistent();
+			//assert isConsistent();
 			return true;
 		}
 		else
 		{
 			size=size-count;
 			map.put((T) e,value);
-			assert isConsistent();
+			//assert isConsistent();
 			return true;
 		}
 	}
@@ -156,7 +155,6 @@ public class HashMultiSet<T> extends AbstractCollection <T> implements MultiSet<
 		return liste;
 	}
 	
-	@SuppressWarnings("rawtypes")
 	public String toString()
 	{
 		StringBuilder b =new StringBuilder();
@@ -171,18 +169,18 @@ public class HashMultiSet<T> extends AbstractCollection <T> implements MultiSet<
 		return b.toString();
 	}
 	
-	public boolean isConsistent()
-	{
-		boolean bool=true;
-		int all=0;
-		for (int i: map.values())
-		{
-			if (i<=0)
-				bool=false;
-			all=all+i;
-		}
-		if (all!=this.size())
-			bool=false;
-		return bool;
-	}
+//	public boolean isConsistent()
+//	{
+//		boolean bool=true;
+//		int all=0;
+//		for (int i: map.values())
+//		{
+//			if (i<=0)
+//				bool=false;
+//			all=all+i;
+//		}
+//		if (all!=this.size())
+//			bool=false;
+//		return bool;
+//	}
 }

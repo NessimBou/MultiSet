@@ -1,14 +1,9 @@
 package pobj.tme5.test;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import pobj.tme5.HashMultiSet;
-import pobj.tme5.MultiSet;
 import static org.junit.Assert.*;
 
 public class HashMultiSetTest2 
