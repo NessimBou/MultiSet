@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import pobj.tme5.test;
+import pobj.tme5.HashMultiSet;
 import pobj.tme5.MultiSet;
 
 public class HashMultiSetTest {
@@ -14,7 +14,7 @@ public class HashMultiSetTest {
 	
 	@Before
 	public void before() {
-		m = new test<>();
+		m = new HashMultiSet<String>();
 	}
 	
 	@Test 
