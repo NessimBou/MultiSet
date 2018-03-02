@@ -150,7 +150,7 @@ public class HashMultiSet<T> extends AbstractCollection <T> implements MultiSet<
 	{
 		Set<T> a = new HashSet<T>(this);
 		List <T> liste= new ArrayList<T>(a);	
-		Collections.sort(liste, (x,y) -> map.get(x).compareTo(map.get(y)));
+		Collections.sort(liste, Collections.reverseOrder((x,y) -> map.get(x).compareTo(map.get(y))));
 		//System.out.println(liste);
 		return liste;
 	}
