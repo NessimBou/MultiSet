@@ -33,15 +33,15 @@ public class WordCount
 		{ 
 			for (String word : line.split("\\P{L}+"))
 			{ 
-				if (word.equals("")) continue;
-				cpt++;
+				if (word.equals(""))continue;
 				ms.add(word.toLowerCase());
+				cpt++;
 			}
 		}
 		br.close();	
-		//System.out.println(cpt);
-		//System.out.println(ms.size());
-		System.out.println(ms.toString());
+		System.out.println(cpt);
+		System.out.println(ms.size());
+		//System.out.println(ms.toString());
 		//System.out.println("\n");
 		//List<String> maliste = ms.elements();
 		//System.out.println(maliste);

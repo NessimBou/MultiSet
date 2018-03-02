@@ -34,7 +34,6 @@ public class HashMultiSet<T> extends AbstractCollection <T> implements MultiSet<
 	@Override
 	public boolean add(T e) throws IllegalArgumentException
 	{
-		size++;
 		return add(e,1);
 	}
 
@@ -44,14 +43,14 @@ public class HashMultiSet<T> extends AbstractCollection <T> implements MultiSet<
 		if (!map.containsKey(e))
 		{
 			map.put(e,count);
-			size=size+count;
 		}
 		else
 		{
 			int value=map.get(e);
 			map.put(e,value+count);
-			size=size+count;
 		}
+		size=size+count;
+		assert isConsistent();
 		return true;
 	}
 
@@ -73,12 +72,14 @@ public class HashMultiSet<T> extends AbstractCollection <T> implements MultiSet<
 		{
 			size=size-count;
 			map.put((T) e, null);
+			assert isConsistent();
 			return true;
 		}
 		else
 		{
 			size=size-count;
 			map.put((T) e,value);
+			assert isConsistent();
 			return true;
 		}
 	}
@@ -168,5 +169,20 @@ public class HashMultiSet<T> extends AbstractCollection <T> implements MultiSet<
 
 		b.append("]");
 		return b.toString();
+	}
+	
+	public boolean isConsistent()
+	{
+		boolean bool=true;
+		int all=0;
+		for (int i: map.values())
+		{
+			if (i<=0)
+				bool=false;
+			all=all+i;
+		}
+		if (all!=this.size())
+			bool=false;
+		return bool;
 	}
 }
